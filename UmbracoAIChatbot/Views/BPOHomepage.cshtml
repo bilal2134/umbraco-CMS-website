@@ -26,6 +26,8 @@
     var contactAddress = Model.HasValue("contactAddress") ? Model.Value<string>("contactAddress") : "123 Business Park, Suite 100<br>New York, NY 10001";
     
     // HEADER SECTION
+    var logoImage = Model.HasValue("logoImage") ? Model.Value<Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>("logoImage") : null;
+    var logoImageUrl = logoImage != null ? logoImage.Url() : null;
     var logoText = Model.HasValue("logoText") ? Model.Value<string>("logoText") : "Greybeard";
     var navLink1Text = Model.HasValue("navLink1Text") ? Model.Value<string>("navLink1Text") : "Home";
     var navLink1Url = Model.HasValue("navLink1Url") ? Model.Value<string>("navLink1Url") : "#hero";
@@ -957,7 +959,16 @@
     <!-- Header -->
     <header id="header">
         <nav>
-            <div class="logo">@logoText</div>
+            <div class="logo">
+                @if (!string.IsNullOrEmpty(logoImageUrl))
+                {
+                    <img src="@logoImageUrl" alt="@logoText" style="height: 40px; width: auto;" />
+                }
+                else
+                {
+                    @logoText
+                }
+            </div>
             <ul>
                 <li><a href="@navLink1Url">@navLink1Text</a></li>
                 <li><a href="@navLink2Url">@navLink2Text</a></li>
