@@ -70,6 +70,23 @@
     var client6Name = Model.HasValue("client6Name") ? Model.Value<string>("client6Name") : "Oracle";
     var client7Name = Model.HasValue("client7Name") ? Model.Value<string>("client7Name") : "IBM";
     var client8Name = Model.HasValue("client8Name") ? Model.Value<string>("client8Name") : "SAP";
+    
+    // FEATURED PRODUCTS SECTION
+    var productsTag = Model.HasValue("productsTag") ? Model.Value<string>("productsTag") : "Our Solutions";
+    var productsHeading = Model.HasValue("productsHeading") ? Model.Value<string>("productsHeading") : "Featured Products";
+    var productsSubheading = Model.HasValue("productsSubheading") ? Model.Value<string>("productsSubheading") : "Innovative products built on Microsoft technologies to solve real-world business challenges.";
+    var product1Icon = Model.HasValue("product1Icon") ? Model.Value<string>("product1Icon") : "fas fa-bolt";
+    var product1Title = Model.HasValue("product1Title") ? Model.Value<string>("product1Title") : "FanSelector";
+    var product1Description = Model.HasValue("product1Description") ? Model.Value<string>("product1Description") : "Revolutionary fan engagement platform powered by AI, transforming how organizations connect with their audiences.";
+    var product1Link = Model.HasValue("product1Link") ? Model.Value<string>("product1Link") : "#contact";
+    var product2Icon = Model.HasValue("product2Icon") ? Model.Value<string>("product2Icon") : "fas fa-mobile-alt";
+    var product2Title = Model.HasValue("product2Title") ? Model.Value<string>("product2Title") : "Dynamics 365 Solutions";
+    var product2Description = Model.HasValue("product2Description") ? Model.Value<string>("product2Description") : "Custom Dynamics 365 implementations and integrations tailored to your business needs.";
+    var product2Link = Model.HasValue("product2Link") ? Model.Value<string>("product2Link") : "#contact";
+    var product3Icon = Model.HasValue("product3Icon") ? Model.Value<string>("product3Icon") : "fas fa-globe";
+    var product3Title = Model.HasValue("product3Title") ? Model.Value<string>("product3Title") : "Enterprise Portal";
+    var product3Description = Model.HasValue("product3Description") ? Model.Value<string>("product3Description") : "Modern, scalable enterprise portals built on Azure and Microsoft Power Platform.";
+    var product3Link = Model.HasValue("product3Link") ? Model.Value<string>("product3Link") : "#contact";
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -1048,33 +1065,33 @@
     <!-- Products Section -->
     <section id="products">
         <div class="section-header">
-            <div class="section-tag">Our Solutions</div>
-            <h2 class="section-title">Featured Products</h2>
-            <p class="section-subtitle">Innovative products built on Microsoft technologies to solve real-world business challenges.</p>
+            <div class="section-tag">@productsTag</div>
+            <h2 class="section-title">@productsHeading</h2>
+            <p class="section-subtitle">@productsSubheading</p>
         </div>
         <div class="products-grid">
             <div class="product-card">
-                <div class="product-image"><i class="fas fa-bolt"></i></div>
+                <div class="product-image"><i class="@product1Icon"></i></div>
                 <div class="product-content">
-                    <h3>FanSelector</h3>
-                    <p>Revolutionary fan engagement platform powered by AI, transforming how organizations connect with their audiences.</p>
-                    <a href="#contact" class="btn-primary">Learn More</a>
+                    <h3>@product1Title</h3>
+                    <p>@product1Description</p>
+                    <a href="@product1Link" class="btn-primary">Learn More</a>
                 </div>
             </div>
             <div class="product-card">
-                <div class="product-image"><i class="fas fa-mobile-alt"></i></div>
+                <div class="product-image"><i class="@product2Icon"></i></div>
                 <div class="product-content">
-                    <h3>Dynamics 365 Solutions</h3>
-                    <p>Custom Dynamics 365 implementations and integrations tailored to your business needs.</p>
-                    <a href="#contact" class="btn-primary">Learn More</a>
+                    <h3>@product2Title</h3>
+                    <p>@product2Description</p>
+                    <a href="@product2Link" class="btn-primary">Learn More</a>
                 </div>
             </div>
             <div class="product-card">
-                <div class="product-image"><i class="fas fa-globe"></i></div>
+                <div class="product-image"><i class="@product3Icon"></i></div>
                 <div class="product-content">
-                    <h3>Enterprise Portal</h3>
-                    <p>Modern, scalable enterprise portals built on Azure and Microsoft Power Platform.</p>
-                    <a href="#contact" class="btn-primary">Learn More</a>
+                    <h3>@product3Title</h3>
+                    <p>@product3Description</p>
+                    <a href="@product3Link" class="btn-primary">Learn More</a>
                 </div>
             </div>
         </div>
