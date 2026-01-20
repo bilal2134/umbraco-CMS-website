@@ -2,22 +2,72 @@
 @{
     Layout = null;
     
-    // Get editable content from Umbraco backoffice with fallback defaults
+    // HERO SECTION
     var heroTitle = Model.HasValue("heroTitle") ? Model.Value<string>("heroTitle") : "Transform Your Business with <span class=\"highlight\">Greybeard</span>";
     var heroSubtitle = Model.HasValue("heroSubtitle") ? Model.Value<string>("heroSubtitle") : "Empowering organizations with cutting-edge solutions, innovative products, and expert consulting services that drive digital transformation and business excellence.";
+    var demoIframeUrl = Model.HasValue("demoIframeUrl") ? Model.Value<string>("demoIframeUrl") : "https://app.supademo.com/embed/cmcaf5vkg1pn28qszxyn1d26n?embed_v=2&utm_source=embed";
+    var primaryCtaText = Model.HasValue("primaryCtaText") ? Model.Value<string>("primaryCtaText") : "Get Started";
+    var primaryCtaUrl = Model.HasValue("primaryCtaUrl") ? Model.Value<string>("primaryCtaUrl") : "#contact";
+    var secondaryCtaText = Model.HasValue("secondaryCtaText") ? Model.Value<string>("secondaryCtaText") : "Learn More";
+    var secondaryCtaUrl = Model.HasValue("secondaryCtaUrl") ? Model.Value<string>("secondaryCtaUrl") : "#about";
     
+    // ABOUT SECTION
     var aboutPara1 = Model.HasValue("aboutParagraph1") ? Model.Value<string>("aboutParagraph1") : "Greybeard Corporate Solutions is a leading technology consulting firm specializing in Microsoft technologies, cloud solutions, and digital transformation.";
     var aboutPara2 = Model.HasValue("aboutParagraph2") ? Model.Value<string>("aboutParagraph2") : "With a team of experienced professionals and deep expertise in enterprise solutions, we help organizations navigate the complexities of digital transformation and achieve measurable business outcomes.";
     var aboutPara3 = Model.HasValue("aboutParagraph3") ? Model.Value<string>("aboutParagraph3") : "Our commitment to excellence, innovation, and client success has made us a trusted partner for businesses across industries.";
-    
     var statsProjects = Model.HasValue("statsProjects") ? Model.Value<string>("statsProjects") : "500+";
     var statsClients = Model.HasValue("statsClients") ? Model.Value<string>("statsClients") : "200+";
     var statsYears = Model.HasValue("statsYears") ? Model.Value<string>("statsYears") : "15+";
     var statsSatisfaction = Model.HasValue("statsSatisfaction") ? Model.Value<string>("statsSatisfaction") : "98%";
     
+    // CONTACT SECTION
     var contactEmail = Model.HasValue("contactEmail") ? Model.Value<string>("contactEmail") : "contact@greybeard.com";
     var contactPhone = Model.HasValue("contactPhone") ? Model.Value<string>("contactPhone") : "+1 (555) 123-4567";
     var contactAddress = Model.HasValue("contactAddress") ? Model.Value<string>("contactAddress") : "123 Business Park, Suite 100<br>New York, NY 10001";
+    
+    // HEADER SECTION
+    var logoText = Model.HasValue("logoText") ? Model.Value<string>("logoText") : "Greybeard";
+    var navLink1Text = Model.HasValue("navLink1Text") ? Model.Value<string>("navLink1Text") : "Home";
+    var navLink1Url = Model.HasValue("navLink1Url") ? Model.Value<string>("navLink1Url") : "#hero";
+    var navLink2Text = Model.HasValue("navLink2Text") ? Model.Value<string>("navLink2Text") : "Services";
+    var navLink2Url = Model.HasValue("navLink2Url") ? Model.Value<string>("navLink2Url") : "#services";
+    var navLink3Text = Model.HasValue("navLink3Text") ? Model.Value<string>("navLink3Text") : "About";
+    var navLink3Url = Model.HasValue("navLink3Url") ? Model.Value<string>("navLink3Url") : "#about";
+    var navLink4Text = Model.HasValue("navLink4Text") ? Model.Value<string>("navLink4Text") : "Contact";
+    var navLink4Url = Model.HasValue("navLink4Url") ? Model.Value<string>("navLink4Url") : "#contact";
+    var ctaButtonText = Model.HasValue("ctaButtonText") ? Model.Value<string>("ctaButtonText") : "Contact Us";
+    
+    // SERVICES SECTION
+    var servicesHeading = Model.HasValue("servicesHeading") ? Model.Value<string>("servicesHeading") : "Our Services";
+    var servicesSubheading = Model.HasValue("servicesSubheading") ? Model.Value<string>("servicesSubheading") : "Comprehensive solutions designed to accelerate your business growth and digital transformation journey.";
+    var service1Title = Model.HasValue("service1Title") ? Model.Value<string>("service1Title") : "Business Consulting";
+    var service1Icon = Model.HasValue("service1Icon") ? Model.Value<string>("service1Icon") : "fas fa-briefcase";
+    var service1Description = Model.HasValue("service1Description") ? Model.Value<string>("service1Description") : "Strategic guidance and expert consulting to optimize your business processes and drive sustainable growth.";
+    var service2Title = Model.HasValue("service2Title") ? Model.Value<string>("service2Title") : "Cloud Solutions";
+    var service2Icon = Model.HasValue("service2Icon") ? Model.Value<string>("service2Icon") : "fas fa-cloud";
+    var service2Description = Model.HasValue("service2Description") ? Model.Value<string>("service2Description") : "Scalable cloud infrastructure and migration services powered by Microsoft Azure and leading platforms.";
+    var service3Title = Model.HasValue("service3Title") ? Model.Value<string>("service3Title") : "Digital Transformation";
+    var service3Icon = Model.HasValue("service3Icon") ? Model.Value<string>("service3Icon") : "fas fa-rocket";
+    var service3Description = Model.HasValue("service3Description") ? Model.Value<string>("service3Description") : "End-to-end digital transformation services that modernize your operations and enhance customer experiences.";
+    var service4Title = Model.HasValue("service4Title") ? Model.Value<string>("service4Title") : "Data Analytics";
+    var service4Icon = Model.HasValue("service4Icon") ? Model.Value<string>("service4Icon") : "fas fa-chart-line";
+    var service4Description = Model.HasValue("service4Description") ? Model.Value<string>("service4Description") : "Advanced analytics and business intelligence solutions that turn data into actionable insights.";
+    var service5Title = Model.HasValue("service5Title") ? Model.Value<string>("service5Title") : "AI & Automation";
+    var service5Icon = Model.HasValue("service5Icon") ? Model.Value<string>("service5Icon") : "fas fa-robot";
+    var service5Description = Model.HasValue("service5Description") ? Model.Value<string>("service5Description") : "Intelligent automation and AI-powered solutions to streamline workflows and boost productivity.";
+    var service6Title = Model.HasValue("service6Title") ? Model.Value<string>("service6Title") : "Security & Compliance";
+    var service6Icon = Model.HasValue("service6Icon") ? Model.Value<string>("service6Icon") : "fas fa-shield-alt";
+    var service6Description = Model.HasValue("service6Description") ? Model.Value<string>("service6Description") : "Robust security frameworks and compliance solutions to protect your digital assets.";
+    
+    // CLIENTS SECTION
+    var client1Name = Model.HasValue("client1Name") ? Model.Value<string>("client1Name") : "Microsoft";
+    var client2Name = Model.HasValue("client2Name") ? Model.Value<string>("client2Name") : "Amazon";
+    var client3Name = Model.HasValue("client3Name") ? Model.Value<string>("client3Name") : "Google";
+    var client4Name = Model.HasValue("client4Name") ? Model.Value<string>("client4Name") : "Apple";
+    var client5Name = Model.HasValue("client5Name") ? Model.Value<string>("client5Name") : "Meta";
+    var client6Name = Model.HasValue("client6Name") ? Model.Value<string>("client6Name") : "Oracle";
+    var client7Name = Model.HasValue("client7Name") ? Model.Value<string>("client7Name") : "IBM";
+    var client8Name = Model.HasValue("client8Name") ? Model.Value<string>("client8Name") : "SAP";
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -907,14 +957,14 @@
     <!-- Header -->
     <header id="header">
         <nav>
-            <div class="logo">Greybeard</div>
+            <div class="logo">@logoText</div>
             <ul>
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#services">Services</a></li>
+                <li><a href="@navLink1Url">@navLink1Text</a></li>
+                <li><a href="@navLink2Url">@navLink2Text</a></li>
                 <li><a href="#products">Products</a></li>
-                <li><a href="#about">About</a></li>
+                <li><a href="@navLink3Url">@navLink3Text</a></li>
                 <li><a href="#clients">Clients</a></li>
-                <li><a href="#contact" class="cta-nav">Contact Us</a></li>
+                <li><a href="@navLink4Url" class="cta-nav">@ctaButtonText</a></li>
             </ul>
         </nav>
     </header>
@@ -925,14 +975,14 @@
             <h1>@Html.Raw(heroTitle)</h1>
             <p>@heroSubtitle</p>
             <div>
-                <a href="#contact" class="btn-primary">Get Started</a>
-                <a href="#about" class="btn-secondary">Learn More</a>
+                <a href="@primaryCtaUrl" class="btn-primary">@primaryCtaText</a>
+                <a href="@secondaryCtaUrl" class="btn-secondary">@secondaryCtaText</a>
             </div>
         </div>
         <div class="demo-container">
-            <iframe src="https://app.supademo.com/embed/cmcaf5vkg1pn28qszxyn1d26n?embed_v=2&utm_source=embed" 
+            <iframe src="@demoIframeUrl" 
                     loading="lazy" 
-                    title="Fanselector Demo" 
+                    title="Demo" 
                     allow="clipboard-write" 
                     frameborder="0" 
                     webkitallowfullscreen="true" 
@@ -947,39 +997,39 @@
     <section id="services" class="services">
         <div class="section-header">
             <div class="section-tag">What We Do</div>
-            <h2 class="section-title">Our Services</h2>
-            <p class="section-subtitle">Comprehensive solutions designed to accelerate your business growth and digital transformation journey.</p>
+            <h2 class="section-title">@servicesHeading</h2>
+            <p class="section-subtitle">@servicesSubheading</p>
         </div>
         <div class="services-grid">
             <div class="service-card">
-                <div class="service-icon"><i class="fas fa-briefcase"></i></div>
-                <h3>Business Consulting</h3>
-                <p>Strategic guidance and expert consulting to optimize your business processes and drive sustainable growth.</p>
+                <div class="service-icon"><i class="@service1Icon"></i></div>
+                <h3>@service1Title</h3>
+                <p>@service1Description</p>
             </div>
             <div class="service-card">
-                <div class="service-icon"><i class="fas fa-cloud"></i></div>
-                <h3>Cloud Solutions</h3>
-                <p>Scalable cloud infrastructure and migration services powered by Microsoft Azure and leading platforms.</p>
+                <div class="service-icon"><i class="@service2Icon"></i></div>
+                <h3>@service2Title</h3>
+                <p>@service2Description</p>
             </div>
             <div class="service-card">
-                <div class="service-icon"><i class="fas fa-rocket"></i></div>
-                <h3>Digital Transformation</h3>
-                <p>End-to-end digital transformation services that modernize your operations and enhance customer experiences.</p>
+                <div class="service-icon"><i class="@service3Icon"></i></div>
+                <h3>@service3Title</h3>
+                <p>@service3Description</p>
             </div>
             <div class="service-card">
-                <div class="service-icon"><i class="fas fa-chart-line"></i></div>
-                <h3>Data Analytics</h3>
-                <p>Advanced analytics and business intelligence solutions that turn data into actionable insights.</p>
+                <div class="service-icon"><i class="@service4Icon"></i></div>
+                <h3>@service4Title</h3>
+                <p>@service4Description</p>
             </div>
             <div class="service-card">
-                <div class="service-icon"><i class="fas fa-robot"></i></div>
-                <h3>AI & Automation</h3>
-                <p>Intelligent automation and AI-powered solutions to streamline workflows and boost productivity.</p>
+                <div class="service-icon"><i class="@service5Icon"></i></div>
+                <h3>@service5Title</h3>
+                <p>@service5Description</p>
             </div>
             <div class="service-card">
-                <div class="service-icon"><i class="fas fa-shield-alt"></i></div>
-                <h3>Security & Compliance</h3>
-                <p>Robust security frameworks and compliance solutions to protect your digital assets.</p>
+                <div class="service-icon"><i class="@service6Icon"></i></div>
+                <h3>@service6Title</h3>
+                <p>@service6Description</p>
             </div>
         </div>
     </section>
@@ -1063,25 +1113,25 @@
         <div class="clients-slider-wrapper">
             <div class="clients-slider">
                 <div class="clients-grid">
-                    <div class="client-logo">Microsoft</div>
-                    <div class="client-logo">Amazon</div>
-                    <div class="client-logo">Google</div>
-                    <div class="client-logo">IBM</div>
-                    <div class="client-logo">Oracle</div>
-                    <div class="client-logo">SAP</div>
-                    <div class="client-logo">Salesforce</div>
-                    <div class="client-logo">Adobe</div>
+                    <div class="client-logo">@client1Name</div>
+                    <div class="client-logo">@client2Name</div>
+                    <div class="client-logo">@client3Name</div>
+                    <div class="client-logo">@client4Name</div>
+                    <div class="client-logo">@client5Name</div>
+                    <div class="client-logo">@client6Name</div>
+                    <div class="client-logo">@client7Name</div>
+                    <div class="client-logo">@client8Name</div>
                 </div>
                 <!-- Duplicate for seamless loop -->
                 <div class="clients-grid" aria-hidden="true">
-                    <div class="client-logo">Microsoft</div>
-                    <div class="client-logo">Amazon</div>
-                    <div class="client-logo">Google</div>
-                    <div class="client-logo">IBM</div>
-                    <div class="client-logo">Oracle</div>
-                    <div class="client-logo">SAP</div>
-                    <div class="client-logo">Salesforce</div>
-                    <div class="client-logo">Adobe</div>
+                    <div class="client-logo">@client1Name</div>
+                    <div class="client-logo">@client2Name</div>
+                    <div class="client-logo">@client3Name</div>
+                    <div class="client-logo">@client4Name</div>
+                    <div class="client-logo">@client5Name</div>
+                    <div class="client-logo">@client6Name</div>
+                    <div class="client-logo">@client7Name</div>
+                    <div class="client-logo">@client8Name</div>
                 </div>
             </div>
         </div>
