@@ -42,51 +42,40 @@
     // SERVICES SECTION
     var servicesHeading = Model.HasValue("servicesHeading") ? Model.Value<string>("servicesHeading") : "Our Services";
     var servicesSubheading = Model.HasValue("servicesSubheading") ? Model.Value<string>("servicesSubheading") : "Comprehensive solutions designed to accelerate your business growth and digital transformation journey.";
-    var service1Title = Model.HasValue("service1Title") ? Model.Value<string>("service1Title") : "Business Consulting";
-    var service1Icon = Model.HasValue("service1Icon") ? Model.Value<string>("service1Icon") : "fas fa-briefcase";
-    var service1Description = Model.HasValue("service1Description") ? Model.Value<string>("service1Description") : "Strategic guidance and expert consulting to optimize your business processes and drive sustainable growth.";
-    var service2Title = Model.HasValue("service2Title") ? Model.Value<string>("service2Title") : "Cloud Solutions";
-    var service2Icon = Model.HasValue("service2Icon") ? Model.Value<string>("service2Icon") : "fas fa-cloud";
-    var service2Description = Model.HasValue("service2Description") ? Model.Value<string>("service2Description") : "Scalable cloud infrastructure and migration services powered by Microsoft Azure and leading platforms.";
-    var service3Title = Model.HasValue("service3Title") ? Model.Value<string>("service3Title") : "Digital Transformation";
-    var service3Icon = Model.HasValue("service3Icon") ? Model.Value<string>("service3Icon") : "fas fa-rocket";
-    var service3Description = Model.HasValue("service3Description") ? Model.Value<string>("service3Description") : "End-to-end digital transformation services that modernize your operations and enhance customer experiences.";
-    var service4Title = Model.HasValue("service4Title") ? Model.Value<string>("service4Title") : "Data Analytics";
-    var service4Icon = Model.HasValue("service4Icon") ? Model.Value<string>("service4Icon") : "fas fa-chart-line";
-    var service4Description = Model.HasValue("service4Description") ? Model.Value<string>("service4Description") : "Advanced analytics and business intelligence solutions that turn data into actionable insights.";
-    var service5Title = Model.HasValue("service5Title") ? Model.Value<string>("service5Title") : "AI & Automation";
-    var service5Icon = Model.HasValue("service5Icon") ? Model.Value<string>("service5Icon") : "fas fa-robot";
-    var service5Description = Model.HasValue("service5Description") ? Model.Value<string>("service5Description") : "Intelligent automation and AI-powered solutions to streamline workflows and boost productivity.";
-    var service6Title = Model.HasValue("service6Title") ? Model.Value<string>("service6Title") : "Security & Compliance";
-    var service6Icon = Model.HasValue("service6Icon") ? Model.Value<string>("service6Icon") : "fas fa-shield-alt";
-    var service6Description = Model.HasValue("service6Description") ? Model.Value<string>("service6Description") : "Robust security frameworks and compliance solutions to protect your digital assets.";
+    var servicesItems = Model.Value<Umbraco.Cms.Core.Models.Blocks.BlockListModel>("servicesItems");
+    var servicesToRender = servicesItems?
+        .Select(block => (dynamic)new
+        {
+            Title = block.Content.Value<string>("title"),
+            IconClass = block.Content.Value<string>("iconClass"),
+            Description = block.Content.Value<string>("description")
+        })
+        .Where(service => !string.IsNullOrWhiteSpace(service.Title) || !string.IsNullOrWhiteSpace(service.Description))
+        .ToList() ?? new List<dynamic>();
+
     
     // CLIENTS SECTION
-    var client1Name = Model.HasValue("client1Name") ? Model.Value<string>("client1Name") : "Microsoft";
-    var client2Name = Model.HasValue("client2Name") ? Model.Value<string>("client2Name") : "Amazon";
-    var client3Name = Model.HasValue("client3Name") ? Model.Value<string>("client3Name") : "Google";
-    var client4Name = Model.HasValue("client4Name") ? Model.Value<string>("client4Name") : "Apple";
-    var client5Name = Model.HasValue("client5Name") ? Model.Value<string>("client5Name") : "Meta";
-    var client6Name = Model.HasValue("client6Name") ? Model.Value<string>("client6Name") : "Oracle";
-    var client7Name = Model.HasValue("client7Name") ? Model.Value<string>("client7Name") : "IBM";
-    var client8Name = Model.HasValue("client8Name") ? Model.Value<string>("client8Name") : "SAP";
+    var clientsItems = Model.Value<Umbraco.Cms.Core.Models.Blocks.BlockListModel>("clientsItems");
+    var clientsToRender = clientsItems?
+        .Select(block => block.Content.Value<string>("clientName"))
+        .Where(name => !string.IsNullOrWhiteSpace(name))
+        .ToList() ?? new List<string>();
     
     // FEATURED PRODUCTS SECTION
     var productsTag = Model.HasValue("productsTag") ? Model.Value<string>("productsTag") : "Our Solutions";
     var productsHeading = Model.HasValue("productsHeading") ? Model.Value<string>("productsHeading") : "Featured Products";
     var productsSubheading = Model.HasValue("productsSubheading") ? Model.Value<string>("productsSubheading") : "Innovative products built on Microsoft technologies to solve real-world business challenges.";
-    var product1Icon = Model.HasValue("product1Icon") ? Model.Value<string>("product1Icon") : "fas fa-bolt";
-    var product1Title = Model.HasValue("product1Title") ? Model.Value<string>("product1Title") : "FanSelector";
-    var product1Description = Model.HasValue("product1Description") ? Model.Value<string>("product1Description") : "Revolutionary fan engagement platform powered by AI, transforming how organizations connect with their audiences.";
-    var product1Link = Model.HasValue("product1Link") ? Model.Value<string>("product1Link") : "#contact";
-    var product2Icon = Model.HasValue("product2Icon") ? Model.Value<string>("product2Icon") : "fas fa-mobile-alt";
-    var product2Title = Model.HasValue("product2Title") ? Model.Value<string>("product2Title") : "Dynamics 365 Solutions";
-    var product2Description = Model.HasValue("product2Description") ? Model.Value<string>("product2Description") : "Custom Dynamics 365 implementations and integrations tailored to your business needs.";
-    var product2Link = Model.HasValue("product2Link") ? Model.Value<string>("product2Link") : "#contact";
-    var product3Icon = Model.HasValue("product3Icon") ? Model.Value<string>("product3Icon") : "fas fa-globe";
-    var product3Title = Model.HasValue("product3Title") ? Model.Value<string>("product3Title") : "Enterprise Portal";
-    var product3Description = Model.HasValue("product3Description") ? Model.Value<string>("product3Description") : "Modern, scalable enterprise portals built on Azure and Microsoft Power Platform.";
-    var product3Link = Model.HasValue("product3Link") ? Model.Value<string>("product3Link") : "#contact";
+    var featuredProductsItems = Model.Value<Umbraco.Cms.Core.Models.Blocks.BlockListModel>("featuredProducts");
+    var productsToRender = featuredProductsItems?
+        .Select(block => (dynamic)new
+        {
+            IconClass = block.Content.Value<string>("iconClass"),
+            Title = block.Content.Value<string>("title"),
+            Description = block.Content.Value<string>("description"),
+            Link = block.Content.Value<string>("link")
+        })
+        .Where(product => !string.IsNullOrWhiteSpace(product.Title) || !string.IsNullOrWhiteSpace(product.Description))
+        .ToList() ?? new List<dynamic>();
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -98,6 +87,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/chatbot/chatbot.css">
     <style>
         * {
             margin: 0;
@@ -1029,36 +1019,14 @@
             <p class="section-subtitle">@servicesSubheading</p>
         </div>
         <div class="services-grid">
-            <div class="service-card">
-                <div class="service-icon"><i class="@service1Icon"></i></div>
-                <h3>@service1Title</h3>
-                <p>@service1Description</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon"><i class="@service2Icon"></i></div>
-                <h3>@service2Title</h3>
-                <p>@service2Description</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon"><i class="@service3Icon"></i></div>
-                <h3>@service3Title</h3>
-                <p>@service3Description</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon"><i class="@service4Icon"></i></div>
-                <h3>@service4Title</h3>
-                <p>@service4Description</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon"><i class="@service5Icon"></i></div>
-                <h3>@service5Title</h3>
-                <p>@service5Description</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon"><i class="@service6Icon"></i></div>
-                <h3>@service6Title</h3>
-                <p>@service6Description</p>
-            </div>
+            @foreach (var service in servicesToRender)
+            {
+                <div class="service-card">
+                    <div class="service-icon"><i class="@service.IconClass"></i></div>
+                    <h3>@service.Title</h3>
+                    <p>@service.Description</p>
+                </div>
+            }
         </div>
     </section>
 
@@ -1070,30 +1038,17 @@
             <p class="section-subtitle">@productsSubheading</p>
         </div>
         <div class="products-grid">
-            <div class="product-card">
-                <div class="product-image"><i class="@product1Icon"></i></div>
-                <div class="product-content">
-                    <h3>@product1Title</h3>
-                    <p>@product1Description</p>
-                    <a href="@product1Link" class="btn-primary">Learn More</a>
+            @foreach (var product in productsToRender)
+            {
+                <div class="product-card">
+                    <div class="product-image"><i class="@product.IconClass"></i></div>
+                    <div class="product-content">
+                        <h3>@product.Title</h3>
+                        <p>@product.Description</p>
+                        <a href="@product.Link" class="btn-primary">Learn More</a>
+                    </div>
                 </div>
-            </div>
-            <div class="product-card">
-                <div class="product-image"><i class="@product2Icon"></i></div>
-                <div class="product-content">
-                    <h3>@product2Title</h3>
-                    <p>@product2Description</p>
-                    <a href="@product2Link" class="btn-primary">Learn More</a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-image"><i class="@product3Icon"></i></div>
-                <div class="product-content">
-                    <h3>@product3Title</h3>
-                    <p>@product3Description</p>
-                    <a href="@product3Link" class="btn-primary">Learn More</a>
-                </div>
-            </div>
+            }
         </div>
     </section>
 
@@ -1141,25 +1096,17 @@
         <div class="clients-slider-wrapper">
             <div class="clients-slider">
                 <div class="clients-grid">
-                    <div class="client-logo">@client1Name</div>
-                    <div class="client-logo">@client2Name</div>
-                    <div class="client-logo">@client3Name</div>
-                    <div class="client-logo">@client4Name</div>
-                    <div class="client-logo">@client5Name</div>
-                    <div class="client-logo">@client6Name</div>
-                    <div class="client-logo">@client7Name</div>
-                    <div class="client-logo">@client8Name</div>
+                    @foreach (var clientName in clientsToRender)
+                    {
+                        <div class="client-logo">@clientName</div>
+                    }
                 </div>
                 <!-- Duplicate for seamless loop -->
                 <div class="clients-grid" aria-hidden="true">
-                    <div class="client-logo">@client1Name</div>
-                    <div class="client-logo">@client2Name</div>
-                    <div class="client-logo">@client3Name</div>
-                    <div class="client-logo">@client4Name</div>
-                    <div class="client-logo">@client5Name</div>
-                    <div class="client-logo">@client6Name</div>
-                    <div class="client-logo">@client7Name</div>
-                    <div class="client-logo">@client8Name</div>
+                    @foreach (var clientName in clientsToRender)
+                    {
+                        <div class="client-logo">@clientName</div>
+                    }
                 </div>
             </div>
         </div>
@@ -1329,5 +1276,31 @@
             card.style.animationDelay = `${index * 0.1}s`;
         });
     </script>
+    <div class="chatbot-widget" aria-live="polite">
+        <button id="chatbot-toggle" class="chatbot-toggle" type="button" aria-label="Open chat">
+            <span class="chatbot-face" aria-hidden="true">
+                <span class="chatbot-mouth"></span>
+            </span>
+        </button>
+        <div id="chatbot-panel" class="chatbot-panel" role="dialog" aria-label="Chatbot">
+            <div class="chatbot-header">
+                <div>
+                    <h4>Greybeard Assistant</h4>
+                    <span>Always online</span>
+                </div>
+            </div>
+            <div id="chatbot-messages" class="chatbot-messages">
+                <div class="chatbot-message bot">Hi! How can I help you today?</div>
+            </div>
+            <div class="chatbot-input">
+                <form id="chatbot-form" style="display: flex; gap: 8px; width: 100%;">
+                    <input id="chatbot-input" type="text" placeholder="Ask me anything..." autocomplete="off" />
+                    <button type="submit">Send</button>
+                </form>
+            </div>
+            <div id="chatbot-typing" class="chatbot-typing" style="display: none; padding: 0 16px 12px;">Assistant is typing...</div>
+        </div>
+    </div>
+    <script src="/chatbot/chatbot.js"></script>
 </body>
 </html>
