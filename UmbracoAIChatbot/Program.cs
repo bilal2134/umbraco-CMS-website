@@ -1,6 +1,11 @@
 using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.Options;
+using Umbraco.Cms.Core.Models.Blocks;
+using Umbraco.Cms.Core.Web;
+using Umbraco.Extensions;
+
+using Umbraco.Cms.Core.PublishedCache;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +25,8 @@ await app.BootUmbracoAsync();
 app.MapPost("/api/chatbot", async (
     ChatRequest request,
     IOptions<ChatbotOptions> options,
-    IHttpClientFactory httpClientFactory) =>
+    IHttpClientFactory httpClientFactory,
+    IUmbracoContextFactory umbracoContextFactory) =>
 {
     if (string.IsNullOrWhiteSpace(request.Message))
     {
@@ -39,6 +45,12 @@ app.MapPost("/api/chatbot", async (
     if (!string.IsNullOrWhiteSpace(config.SystemPrompt))
     {
         messages.Add(new ChatMessage("system", config.SystemPrompt));
+    }
+
+    string? siteContext = BuildSiteContext(umbracoContextFactory);
+    if (!string.IsNullOrWhiteSpace(siteContext))
+    {
+        messages.Add(new ChatMessage("system", siteContext));
     }
 
     if (request.History != null)
@@ -130,6 +142,58 @@ static string? ExtractReply(string responseBody)
     }
 
     return null;
+}
+
+static string? BuildSiteContext(IUmbracoContextFactory umbracoContextFactory)
+{
+    using var ctx = umbracoContextFactory.EnsureUmbracoContext();
+    var content = ctx.UmbracoContext.Content;
+    if (content == null)
+    {
+        return null;
+    }
+
+    var homepage = content.GetById(false, Guid.Parse("8953e311-9ce4-46f8-a065-195fa60d5170"));
+
+    if (homepage == null)
+    {
+        return null;
+    }
+
+    List<string> services = homepage
+        .Value<BlockListModel>("servicesItems")?
+        .Select(item => item.Content.Value<string>("title"))
+        .Where(title => !string.IsNullOrWhiteSpace(title))
+        .ToList() ?? new List<string>();
+
+    List<string> products = homepage
+        .Value<BlockListModel>("featuredProducts")?
+        .Select(item => item.Content.Value<string>("title"))
+        .Where(title => !string.IsNullOrWhiteSpace(title))
+        .ToList() ?? new List<string>();
+
+    string contactEmail = homepage.Value<string>("contactEmail") ?? string.Empty;
+
+    StringBuilder context = new();
+    context.AppendLine("Live site context:");
+
+    if (services.Count > 0)
+    {
+        context.AppendLine($"Services: {string.Join(", ", services)}");
+    }
+
+    if (products.Count > 0)
+    {
+        context.AppendLine($"Featured products: {string.Join(", ", products)}");
+    }
+
+    if (!string.IsNullOrWhiteSpace(contactEmail))
+    {
+        context.AppendLine($"Contact: {contactEmail}");
+    }
+
+    context.AppendLine("Sections: hero, services, products, about, contact.");
+    return context.ToString().Trim();
 }
 
 sealed record ChatRequest(string Message, List<ChatMessage>? History);
