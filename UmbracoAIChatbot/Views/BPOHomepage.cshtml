@@ -115,9 +115,24 @@
             font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
             line-height: 1.7;
             color: var(--primary-grey);
-            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            background: linear-gradient(135deg, var(--white) 0%, var(--bg-light) 100%);
             overflow-x: hidden;
             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="%23FF6B35" opacity="0.3"/><circle cx="12" cy="12" r="3" fill="%23FF6B35"/></svg>'), auto;
+        }
+
+        body.dark-mode {
+            --primary-grey: #E6EDF3;
+            --light-grey: #A9B4BF;
+            --lighter-grey: #7B8794;
+            --bg-light: #0B1220;
+            --white: #0F172A;
+            --shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+            --shadow-hover: 0 15px 50px rgba(0, 0, 0, 0.45);
+        }
+
+        body.dark-mode header {
+            background: rgba(15, 23, 42, 0.78);
+            border-bottom: 1px solid rgba(255, 107, 53, 0.2);
         }
 
         a, button, .btn-primary, .btn-secondary, .cta-nav {
@@ -182,6 +197,28 @@
             display: flex;
             gap: 2.5rem;
             align-items: center;
+        }
+
+        .theme-toggle {
+            border: 1px solid rgba(255, 107, 53, 0.25);
+            background: rgba(255, 255, 255, 0.18);
+            color: var(--primary-grey);
+            border-radius: 999px;
+            padding: 0.55rem 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        body.dark-mode .theme-toggle {
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
         }
 
         nav a {
@@ -872,6 +909,80 @@
             color: var(--lighter-grey);
         }
 
+        body.dark-mode .service-card,
+        body.dark-mode .product-card,
+        body.dark-mode .client-logo,
+        body.dark-mode .contact-form {
+            background: #111c33;
+            color: var(--primary-grey);
+            border-color: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        body.dark-mode .service-card p,
+        body.dark-mode .product-content p,
+        body.dark-mode .contact-item p,
+        body.dark-mode .contact-item a,
+        body.dark-mode .footer-section p,
+        body.dark-mode .footer-section a,
+        body.dark-mode .footer-bottom {
+            color: var(--light-grey);
+        }
+
+        body.dark-mode .product-content h3,
+        body.dark-mode .service-card h3,
+        body.dark-mode .contact-item h3,
+        body.dark-mode .footer-section h4 {
+            color: var(--primary-grey);
+        }
+
+        body.dark-mode .contact-form input,
+        body.dark-mode .contact-form textarea {
+            background: #0b1220;
+            color: var(--primary-grey);
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        body.dark-mode .contact-form label {
+            color: var(--primary-grey);
+        }
+
+        body.dark-mode .clients-slider-wrapper::before {
+            background: linear-gradient(to right, #0b1220, transparent);
+        }
+
+        body.dark-mode .clients-slider-wrapper::after {
+            background: linear-gradient(to left, #0b1220, transparent);
+        }
+
+        body.dark-mode .about {
+            background: linear-gradient(135deg, #0f172a 0%, #0b1220 100%);
+            color: #e6edf3;
+        }
+
+        body.dark-mode .about .section-title,
+        body.dark-mode .about .section-subtitle,
+        body.dark-mode .about-text p,
+        body.dark-mode .stat-label {
+            color: #cbd5f5;
+        }
+
+        body.dark-mode .stat-card {
+            background: rgba(15, 23, 42, 0.85);
+            border-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        body.dark-mode footer {
+            background: #0b1220;
+        }
+
+        body.dark-mode .footer-section p,
+        body.dark-mode .footer-section a,
+        body.dark-mode .footer-bottom {
+            color: #cbd5f5;
+        }
+
         /* Animations */
         @@keyframes slideInLeft {
             to {
@@ -982,6 +1093,11 @@
                 <li><a href="#products">Products</a></li>
                 <li><a href="@navLink3Url">@navLink3Text</a></li>
                 <li><a href="#clients">Clients</a></li>
+                <li>
+                    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark mode" aria-pressed="false">
+                        <i id="theme-toggle-icon" class="fa-solid fa-moon"></i>
+                    </button>
+                </li>
                 <li><a href="@navLink4Url" class="cta-nav">@ctaButtonText</a></li>
             </ul>
         </nav>
@@ -1188,6 +1304,40 @@
     </footer>
 
     <script>
+        // Theme toggle (dark mode)
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeToggleIcon = document.getElementById('theme-toggle-icon');
+        const THEME_KEY = 'gb-theme';
+
+        const applyTheme = (theme) => {
+            const isDark = theme === 'dark';
+            document.body.classList.toggle('dark-mode', isDark);
+            if (themeToggle) {
+                themeToggle.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+            }
+            if (themeToggleIcon) {
+                themeToggleIcon.className = isDark ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+            }
+        };
+
+        const preferredTheme = () => {
+            const saved = localStorage.getItem(THEME_KEY);
+            if (saved === 'dark' || saved === 'light') {
+                return saved;
+            }
+            return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        };
+
+        applyTheme(preferredTheme());
+
+        if (themeToggle) {
+            themeToggle.addEventListener('click', () => {
+                const next = document.body.classList.contains('dark-mode') ? 'light' : 'dark';
+                localStorage.setItem(THEME_KEY, next);
+                applyTheme(next);
+            });
+        }
+
         // Scroll reveal animation
         const revealElements = document.querySelectorAll('.section-header, .service-card, .product-card, .about-text, .about-stats, .client-logo, .contact-info, .contact-form');
         

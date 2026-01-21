@@ -194,3 +194,28 @@
   font-size: 0.82rem;
   color: var(--chatbot-muted);
 }
+
+body.dark-mode .chatbot-panel {
+  background: #0f172a;
+}
+
+body.dark-mode .chatbot-messages {
+  background: #0b1220;
+}
+
+body.dark-mode .chatbot-message.bot {
+  background: #111c33;
+  color: #e6edf3;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+body.dark-mode .chatbot-input {
+  background: #0f172a;
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+body.dark-mode .chatbot-input input {
+  background: #0b1220;
+  color: #e6edf3;
+  border-color: rgba(255, 255, 255, 0.12);
+}
