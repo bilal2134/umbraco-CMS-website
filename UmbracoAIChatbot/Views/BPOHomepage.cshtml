@@ -166,6 +166,20 @@
             padding: 1.2rem 3rem;
         }
 
+        .nav-toggle {
+            display: none;
+            background: transparent;
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            color: var(--primary-grey);
+            padding: 0.6rem 0.8rem;
+            border-radius: 10px;
+        }
+
+        body.dark-mode .nav-toggle {
+            border-color: rgba(255, 255, 255, 0.15);
+            color: var(--primary-grey);
+        }
+
         .logo {
             font-size: 1.8rem;
             font-weight: 700;
@@ -219,6 +233,52 @@
         .theme-toggle:hover {
             transform: translateY(-1px);
             box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        @@media (max-width: 960px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-toggle {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.4rem;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 72px;
+                left: 1.5rem;
+                right: 1.5rem;
+                background: var(--white);
+                border-radius: 16px;
+                padding: 1rem 1.2rem;
+                box-shadow: var(--shadow);
+                display: none;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            body.dark-mode .nav-links {
+                background: #0f172a;
+                box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .nav-links li {
+                width: 100%;
+            }
+
+            .nav-links a,
+            .nav-links button {
+                width: 100%;
+                justify-content: center;
+            }
         }
 
         nav a {
@@ -1087,7 +1147,10 @@
                     @logoText
                 }
             </div>
-            <ul>
+            <button id="nav-toggle" class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <ul id="nav-links" class="nav-links">
                 <li><a href="@navLink1Url">@navLink1Text</a></li>
                 <li><a href="@navLink2Url">@navLink2Text</a></li>
                 <li><a href="#products">Products</a></li>
@@ -1308,6 +1371,8 @@
         const themeToggle = document.getElementById('theme-toggle');
         const themeToggleIcon = document.getElementById('theme-toggle-icon');
         const THEME_KEY = 'gb-theme';
+        const navToggle = document.getElementById('nav-toggle');
+        const navLinks = document.getElementById('nav-links');
 
         const applyTheme = (theme) => {
             const isDark = theme === 'dark';
@@ -1335,6 +1400,20 @@
                 const next = document.body.classList.contains('dark-mode') ? 'light' : 'dark';
                 localStorage.setItem(THEME_KEY, next);
                 applyTheme(next);
+            });
+        }
+
+        if (navToggle && navLinks) {
+            navToggle.addEventListener('click', () => {
+                const isOpen = navLinks.classList.toggle('open');
+                navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            });
+
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('open');
+                    navToggle.setAttribute('aria-expanded', 'false');
+                });
             });
         }
 
